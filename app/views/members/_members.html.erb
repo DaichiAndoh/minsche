@@ -1,0 +1,15 @@
+<% if members.any? %>
+  <ul class="list-unstyled">
+    <% members.each do |member| %>
+      <li class="media">
+        <img class="mr-2 rounded" src="<%= gravatar_url(member, { size: 50 }) %>" alt="">
+        <div class="media-body">
+          <div>
+            <%= member.name %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <%= paginate members %>
+<% end %>
