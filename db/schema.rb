@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_06_045351) do
+ActiveRecord::Schema.define(version: 2019_07_16_020101) do
+
+  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.text "introduction"
+    t.string "image"
+    t.integer "code"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "first_creator_id"
+    t.index ["first_creator_id"], name: "index_groups_on_first_creator_id"
+  end
 
   create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -20,4 +32,18 @@ ActiveRecord::Schema.define(version: 2019_07_06_045351) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "relationships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "member_id"
+    t.bigint "group_id"
+    t.boolean "is_admin", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_relationships_on_group_id"
+    t.index ["member_id", "group_id"], name: "index_relationships_on_member_id_and_group_id", unique: true
+    t.index ["member_id"], name: "index_relationships_on_member_id"
+  end
+
+  add_foreign_key "groups", "members", column: "first_creator_id"
+  add_foreign_key "relationships", "groups"
+  add_foreign_key "relationships", "members"
 end

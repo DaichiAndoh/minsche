@@ -1,0 +1,24 @@
+<div class="text-center">
+  <h1>グループ参加</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+
+    <%= form_with(url: join_path, local: true) do |f| %>
+    
+      <div class="form-group">
+        <%= f.label :code, 'Code' %>
+        <%= f.number_field :code, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password, 'Password' %>
+        <%= f.password_field :password, class: 'form-control' %>
+      </div>
+      
+      <%= f.submit 'Join!', class: 'btn btn-primary btn-block' %>
+      
+    <% end %>
+  </div>
+</div>

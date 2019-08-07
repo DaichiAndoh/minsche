@@ -4,33 +4,41 @@
             <p>グループを作成しよう!</p>
             <p>グループを作成しよう!</p>
             <p>グループを作成しよう!</p>
-            <a class="btn btn-lg btn-primary text-white">グループ作成</a>
+            <%= link_to 'グループ作成', new_group_path, class: 'btn btn-lg btn-primary' %> 
         </div>
         <div class="col-3 mx-auto text-center border py-2">
             <p>グループに参加しよう！</p>
             <p>グループに参加しよう！</p>
             <p>グループに参加しよう！</p>
-            <a class="btn btn-lg btn-primary text-white">グループ参加</a>
+            <%= link_to 'グループ参加', join_path, class: 'btn btn-lg btn-primary' %>
         </div>
     </div>
     
     <div>
         <h3 class="border-bottom mt-5">作成したグループ</h3>
-        <p>グループ名</p>
-        <p>グループ名</p>
-        <p>グループ名</p>
+        <% relationships = current_member.relationships %>
+        <% relationships.each do |relationship| %>
+          <% if relationship.is_admin == true %>
+            <% group = Group.find_by(id: relationship.group_id) %>
+            <p><%= link_to group.name, group %></p>
+          <% end %>
+        <% end %>
     </div>
     <div>
         <h3 class="border-bottom mt-5">参加しているグループ</h3>
-        <p>グループ名</p>
-        <p>グループ名</p>
-        <p>グループ名</p>
+        <% relationships = current_member.relationships %>
+        <% relationships.each do |relationship| %>
+          <% if !relationship.is_admin == true %>
+            <% group = Group.find_by(id: relationship.group_id) %>
+            <p><%= link_to group.name, group %></p>
+          <% end %>
+        <% end %>
     </div>
 <% else %>
     <div class="center jumbotron">
       <div class="text-center">
         <h1>Let's  share  the  schedule!</h1>
-        <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+        <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary mt-3' %>
       </div>
     </div>
 <% end %>

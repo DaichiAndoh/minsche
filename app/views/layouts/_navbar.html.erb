@@ -1,5 +1,5 @@
 <header class="mb-4">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-secondary">
         <a class="navbar-brand" href="/">Share Schedule</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>
@@ -9,18 +9,30 @@
           <ul class="navbar-nav mr-auto"></ul>
           <ul class="navbar-nav">
             <% if logged_in? %>
-              <li class="nav-item"><a href="#" class="nav-link">グループ作成</a></li>
-              <li class="nav-item"><a href="#" class="nav-link">グループ参加</a></li>
+              <li class="nav-item"><%= link_to 'グループ作成', new_group_path, class: 'nav-link' %></li>
+              <li class="nav-item"><%= link_to 'グループ参加', join_path, class: 'nav-link' %></li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">作成したグループ</a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li class="dropdown-item"><a>グループ名</a></li>
+                  <% relationships = current_member.relationships %>
+                  <% relationships.each do |relationship| %>
+                    <% if relationship.is_admin == true %>
+                      <% group = Group.find_by(id: relationship.group_id) %>
+                      <%= link_to group.name, group, class: 'dropdown-item' %>
+                    <% end %>
+                  <% end %>
                 </ul>
               </li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">参加しているグループ</a>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li class="dropdown-item"><a>グループ名</a></li>
+                  <% relationships = current_member.relationships %>
+                  <% relationships.each do |relationship| %>
+                    <% if !relationship.is_admin == true %>
+                      <% group = Group.find_by(id: relationship.group_id) %>
+                      <%= link_to group.name, group, class: 'dropdown-item' %>
+                    <% end %>
+                  <% end %>
                 </ul>
               </li>
               <li class="nav-item dropdown">
