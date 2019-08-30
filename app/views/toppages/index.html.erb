@@ -1,16 +1,10 @@
 <% if logged_in? %>
     <div class="row mt-5">
-        <div class="col-3 mx-auto text-center border py-2">
-            <p>グループを作成しよう!</p>
-            <p>グループを作成しよう!</p>
-            <p>グループを作成しよう!</p>
-            <%= link_to 'グループ作成', new_group_path, class: 'btn btn-lg btn-primary' %> 
+        <div class="col-sm-6 text-center py-2">
+            <%= link_to 'グループ作成', new_group_path, class: 'btn btn-lg btn-primary w-100' %> 
         </div>
-        <div class="col-3 mx-auto text-center border py-2">
-            <p>グループに参加しよう！</p>
-            <p>グループに参加しよう！</p>
-            <p>グループに参加しよう！</p>
-            <%= link_to 'グループ参加', join_path, class: 'btn btn-lg btn-primary' %>
+        <div class="col-sm-6 text-center py-2">
+            <%= link_to 'グループ参加', join_path, class: 'btn btn-lg btn-primary w-100' %>
         </div>
     </div>
     
@@ -20,7 +14,7 @@
         <% relationships.each do |relationship| %>
           <% if relationship.is_admin == true %>
             <% group = Group.find_by(id: relationship.group_id) %>
-            <p><%= link_to group.name, group %></p>
+            <p><%= link_to group.name, group_schedules_path(group) %></p>
           <% end %>
         <% end %>
     </div>
@@ -30,7 +24,7 @@
         <% relationships.each do |relationship| %>
           <% if !relationship.is_admin == true %>
             <% group = Group.find_by(id: relationship.group_id) %>
-            <p><%= link_to group.name, group %></p>
+            <p><%= link_to group.name, group_schedules_path(group) %></p>
           <% end %>
         <% end %>
     </div>

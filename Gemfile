@@ -59,3 +59,7 @@ gem 'kaminari'
 gem 'carrierwave'
 
 gem 'rmagick'
+
+gem "simple_calendar", "~> 2.0"
+
+gem "jquery-rails"

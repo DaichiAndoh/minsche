@@ -1,4 +1,11 @@
 class MembersController < ApplicationController
+  def index
+    @group = Group.find(params[:group_id])
+    @relationship = Relationship.find_by(member_id: current_member.id, group_id: @group.id)
+    @creator = Member.find_by(id: @group.first_creator_id)
+    @members = @group.members
+  end
+  
   def new
     @member = Member.new
   end

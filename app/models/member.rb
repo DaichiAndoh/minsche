@@ -21,6 +21,15 @@ class Member < ApplicationRecord
         self.relationships.create(group_id: group.id)
     end
     
+    def be_admin(id)
+        relationship = self.relationships.find_by(group_id: id)
+        unless relationship.is_admin == true
+            relationship.is_admin == true
+        else
+            relationship.is_admin == false
+        end
+    end
+    
     # def join_group(code, passsword)
     #     group = Group.find_by(code: code)
     #     if group && group.authenticate(password)

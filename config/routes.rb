@@ -10,5 +10,8 @@ Rails.application.routes.draw do
   
   get 'join', to: 'groups#join'
   post 'join', to: 'groups#create_join'
-  resources :groups, only: [:show, :new, :create, :edit, :update]
+  resources :groups, only: [:show, :new, :create, :edit, :update, :destroy] do
+    resources :schedules
+    resources :members, only: :index
+  end
 end

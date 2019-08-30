@@ -1,0 +1,55 @@
+<% if @relationship.is_admin == true %>
+    <h1>管理者用ページ</h1>
+    <div class="row">
+        <div class="col-4">
+            <p>作成者：<%= @creator.name %></p>
+            <p>グループ名：<%= @group.name %></p>
+            <p>紹介文：<%= @group.introduction %></p>
+            <p>コード：<%= @group.code %></p>
+            <p>パスワード：<%= @group.password %></p>
+            <%= link_to 'グループ編集', edit_group_path(@group) %>
+        </div>
+        <div class="col-8">
+            <%= image_tag @group.image.to_s %>
+        </div>
+    </div>
+    
+    <ul class="nav nav-tabs nav-justified my-5">
+      <li class="nav-item"><a href="<%= group_schedules_path(@group) %>" class="nav-link">予定表</a></li>
+      <li class="nav-item"><a href="<%= group_members_path(@group) %>" class="nav-link active">メンバー一覧</a></li>
+    </ul>
+    
+    <% @members.each do |member| %>
+        <% if (member.relationships.find_by(group_id: @group.id, is_admin: true)) %>
+            <p><%= member.name %> <button>管理者</button></p>
+        <% else %>
+            <p><%= member.name %> <button>参加者</button></p>
+        <% end %>
+    <% end %>
+    
+<% else %>
+    <div class="row">
+        <div class="col-4">
+            <p>グループ名：<%= @group.name %></p>
+            <p>紹介文：<%= @group.introduction %></p>
+        </div>
+        <div class="col-8">
+            <%= image_tag @group.image.to_s %>
+        </div>
+    </div>
+    
+    <ul class="nav nav-tabs nav-justified my-5">
+      <li class="nav-item"><a href="<%= group_schedules_path(@group) %>" class="nav-link">予定表</a></li>
+      <li class="nav-item"><a href="<%= group_members_path(@group) %>" class="nav-link active">メンバー一覧</a></li>
+    </ul>
+    
+    <% @members.each do |member| %>
+        <% if (member.relationships.find_by(group_id: @group.id, is_admin: true)) %>
+            <p><%= member.name %> <button>管理者</button></p>
+        <% else %>
+            <p><%= member.name %> <button>参加者</button></p>
+        <% end %>
+    <% end %>
+    
+<% end %>
+    

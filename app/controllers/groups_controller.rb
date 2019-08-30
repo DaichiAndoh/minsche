@@ -13,7 +13,7 @@ class GroupsController < ApplicationController
     if @group.save
       current_member.be_first_creator(@group)
       flash[:success] = 'グループを作成しました。'
-      redirect_to @group
+      redirect_to group_schedules_path(@group)
     else
       flash[:danger] = 'グループ作成に失敗しました。'
       render :new
@@ -21,9 +21,26 @@ class GroupsController < ApplicationController
   end
     
   def edit
+    @group = Group.find(params[:id])
   end
       
   def update
+    @group = Group.find(params[:id])
+    if @group.update(group_params)
+      flash[:success] = 'グループを編集しました。'
+      redirect_to group_schedules_path(@group)
+    else
+      flash[:danger] = 'グループを編集できませんでした。'
+      render :edit
+    end
+  end
+  
+  def destroy
+    @group = Group.find(params[:id])
+    @group.destroy
+    
+    flash[:success] = 'グループは正常に削除されました'
+    redirect_to root_url
   end
   
   def join
@@ -35,7 +52,7 @@ class GroupsController < ApplicationController
     @group = Group.find_by(code: code)
     if current_member.join_group(code, password)
       flash[:success] = 'グループに参加しました。'
-      redirect_to @group
+      redirect_to group_schedules_path(@group)
     else
       flash.now[:danger] = 'グループに参加できませんでした。'
       render 'join'
@@ -45,6 +62,6 @@ class GroupsController < ApplicationController
   private
   
   def group_params
-    params.require(:group).permit(:name, :introduction, :image, :code, :password)
+    params.require(:group).permit(:name, :introduction, :image, :code, :password, :password_confirmation)
   end
 end

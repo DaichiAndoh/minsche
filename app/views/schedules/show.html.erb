@@ -1,0 +1,21 @@
+<% if @relationship.is_admin == true %>
+    <h1>予定詳細</h1>
+    
+    <p>タイトル：<%= @schedule.title %></p>
+    <p>日時：<%= @schedule.start_time %> 〜 <%= @schedule.end_time %></p>
+    <p>場所：<%= @schedule.place %></p>
+    <p>メモ：<%= @schedule.detail %></p>
+    
+    <%= link_to '予定を編集', edit_group_schedule_path(@group, @schedule), class: 'btn btn-lg btn-primary my-3' %>
+    <%= link_to '予定を削除', @destroyed_schedule, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-lg btn-primary my-3' %>
+    <%= link_to '一覧へ戻る', group_schedules_path(@group), class: 'btn btn-lg btn-primary my-3' %>
+<% else %>
+    <h1>予定詳細</h1>
+    
+    <p>タイトル：<%= @schedule.title %></p>
+    <p>日時：<%= @schedule.start_time %> 〜 <%= @schedule.end_time %></p>
+    <p>場所：<%= @schedule.place %></p>
+    <p>メモ：<%= @schedule.detail %></p>
+    
+    <%= link_to '一覧へ戻る', group_schedules_path(@group), class: 'btn btn-lg btn-primary my-3' %>
+<% end %>
