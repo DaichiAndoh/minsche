@@ -1,21 +1,94 @@
 <% if @relationship.is_admin == true %>
-    <h1>予定詳細</h1>
-    
-    <p>タイトル：<%= @schedule.title %></p>
-    <p>日時：<%= @schedule.start_time %> 〜 <%= @schedule.end_time %></p>
-    <p>場所：<%= @schedule.place %></p>
-    <p>メモ：<%= @schedule.detail %></p>
-    
-    <%= link_to '予定を編集', edit_group_schedule_path(@group, @schedule), class: 'btn btn-lg btn-primary my-3' %>
-    <%= link_to '予定を削除', @destroyed_schedule, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-lg btn-primary my-3' %>
-    <%= link_to '一覧へ戻る', group_schedules_path(@group), class: 'btn btn-lg btn-primary my-3' %>
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="card mt-5">
+        <% if (@schedule.start_time.strftime("%Y年%m月%d日") == @schedule.end_time.strftime("%Y年%m月%d日")) %>
+          <div class="card-header">
+            <h2 class="text-center">予定詳細</h2>
+          </div>
+          <div class="card-body">
+            <h4>Title : <span class="font-weight-normal"><%= @schedule.title %></span></h4>
+            <h4>Date : <span class="font-weight-normal"><%= @schedule.start_time.strftime("%Y年%m月%d日") %></span></h4>
+            <h4>Time：<span class="font-weight-normal"><%= @schedule.start_time.strftime("%H:%M") %>〜<%= @schedule.end_time.strftime("%H:%M") %></span></h4>
+            <h4>Place：<span class="font-weight-normal"><%= @schedule.place %></span></h4>
+            <h4>Memo：<span class="font-weight-normal"><%= @schedule.detail %></span></h4>
+          </div>
+        <% else %>
+          <div class="card-header">
+            <h2 class="text-center">予定詳細</h2>
+          </div>
+          <div class="card-body">
+            <h4>Title : <span class="font-weight-normal"><%= @schedule.title %></span></h4>
+            <h4>Date : <span class="font-weight-normal"><%= @schedule.start_time.strftime("%Y年%m月%d日") %> 〜 <%= @schedule.end_time.strftime("%Y年%m月%d日") %></span></h4>
+            <h4>Time：<span class="font-weight-normal"><%= @schedule.start_time.strftime("%m月%d日 %H:%M") %>〜<%= @schedule.end_time.strftime("%m月%d日 %H:%M") %></span></h4>
+            <h4>Place：<span class="font-weight-normal"><%= @schedule.place %></span></h4>
+            <h4>Memo：<span class="font-weight-normal"><%= @schedule.detail %></span></h4>
+          </div>
+        <% end %>
+      </div>
+      
+      
+      <!--<% if (@schedule.start_time.strftime("%Y年%m月%d日") == @schedule.end_time.strftime("%Y年%m月%d日")) %>-->
+      <!--  <h2 class="text-center"><%= @schedule.start_time.strftime("%Y年%m月%d日") %>の予定</h2>-->
+      <!--  <h3>Title : <%= @schedule.title %></h2>-->
+      <!--  <h3>Day : <%= @schedule.start_time.strftime("%Y年%m月%d日") %></h3>-->
+      <!--  <h3>Time：<%= @schedule.start_time.strftime("%H:%M") %>〜<%= @schedule.end_time.strftime("%H:%M") %></h3>-->
+      <!--<% else %>-->
+      <!--  <h2 class="text-center"><%= @schedule.start_time.strftime("%Y年%m月%d日") %> - <%= @schedule.end_time.strftime("%Y年%m月%d日") %>の予定</h2>-->
+      <!--  <h3>Title : <%= @schedule.title %></h2>-->
+      <!--  <h3>Day : <%= @schedule.start_time.strftime("%Y年%m月%d日") %> 〜 <%= @schedule.end_time.strftime("%Y年%m月%d日") %></h3>-->
+      <!--  <h3>Time：<%= @schedule.start_time.strftime("%m月%d日 %H:%M") %>〜<%= @schedule.end_time.strftime("%m月%d日 %H:%M") %></h3>-->
+      <!--<% end %>-->
+      
+      <!--<h3>Place：<%= @schedule.place %></h3>-->
+      <!--<h3>Memo：<%= @schedule.detail %></h3>-->
+      
+      <div class="d-flex justify-content-center">
+          <%= link_to '予定を編集', edit_group_schedule_path(@group, @schedule), class: 'btn btn-lg btn-primary mt-3 mb-2 mx-4' %>
+          <%= link_to '予定を削除', @destroyed_schedule, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-lg btn-primary mt-3 mb-2 mx-4' %>
+      </div>
+      <%= link_to 'ホームへ戻る', group_schedules_path(@group) %>
+    </div>
+  </div>
 <% else %>
-    <h1>予定詳細</h1>
+  <div class="row">
+    <div class="col-sm-8 offset-sm-2">
+      <div class="card mt-5">
+        <% if (@schedule.start_time.strftime("%Y年%m月%d日") == @schedule.end_time.strftime("%Y年%m月%d日")) %>
+          <div class="card-header">
+            <h2 class="text-center">予定詳細</h2>
+          </div>
+          <div class="card-body">
+            <h4>Title : <span class="font-weight-normal"><%= @schedule.title %></span></h4>
+            <h4>Date : <span class="font-weight-normal"><%= @schedule.start_time.strftime("%Y年%m月%d日") %></span></h4>
+            <h4>Time：<span class="font-weight-normal"><%= @schedule.start_time.strftime("%H:%M") %>〜<%= @schedule.end_time.strftime("%H:%M") %></span></h4>
+            <h4>Place：<span class="font-weight-normal"><%= @schedule.place %></span></h4>
+            <h4>Memo：<span class="font-weight-normal"><%= @schedule.detail %></span></h4>
+          </div>
+        <% else %>
+          <div class="card-header">
+            <h2 class="text-center">予定詳細</h2>
+          </div>
+          <div class="card-body">
+            <h4>Title : <span class="font-weight-normal"><%= @schedule.title %></span></h4>
+            <h4>Date : <span class="font-weight-normal"><%= @schedule.start_time.strftime("%Y年%m月%d日") %> 〜 <%= @schedule.end_time.strftime("%Y年%m月%d日") %></span></h4>
+            <h4>Time：<span class="font-weight-normal"><%= @schedule.start_time.strftime("%m月%d日 %H:%M") %>〜<%= @schedule.end_time.strftime("%m月%d日 %H:%M") %></span></h4>
+            <h4>Place：<span class="font-weight-normal"><%= @schedule.place %></span></h4>
+            <h4>Memo：<span class="font-weight-normal"><%= @schedule.detail %></span></h4>
+          </div>
+        <% end %>
+      </div>
+      
+      <%= link_to '一覧へ戻る', group_schedules_path(@group), class: 'btn btn-lg btn-primary my-3' %>
+    </div>
+  </div>
+
+    <!--<h1>予定詳細</h1>-->
     
-    <p>タイトル：<%= @schedule.title %></p>
-    <p>日時：<%= @schedule.start_time %> 〜 <%= @schedule.end_time %></p>
-    <p>場所：<%= @schedule.place %></p>
-    <p>メモ：<%= @schedule.detail %></p>
+    <!--<p>タイトル：<%= @schedule.title %></p>-->
+    <!--<p>日時：<%= @schedule.start_time %> 〜 <%= @schedule.end_time %></p>-->
+    <!--<p>場所：<%= @schedule.place %></p>-->
+    <!--<p>メモ：<%= @schedule.detail %></p>-->
     
-    <%= link_to '一覧へ戻る', group_schedules_path(@group), class: 'btn btn-lg btn-primary my-3' %>
+    <!--<%= link_to '一覧へ戻る', group_schedules_path(@group), class: 'btn btn-lg btn-primary my-3' %>-->
 <% end %>

@@ -1,15 +1,17 @@
 <% if logged_in? %>
-    <div class="row mt-5">
-        <div class="col-sm-6 text-center py-2">
-            <%= link_to 'グループ作成', new_group_path, class: 'btn btn-lg btn-primary w-100' %> 
+    <div class="row my-5">
+        <div class="col-md-4 mx-auto">
+            <%= link_to 'グループ作成', new_group_path, class: 'btn btn-lg btn-primary w-100 text-center' %>
+            <small class="text-muted"><i class="far fa-question-circle"></i> グループを作成して、グループのスケジュールを管理・共有できます。</small>
         </div>
-        <div class="col-sm-6 text-center py-2">
-            <%= link_to 'グループ参加', join_path, class: 'btn btn-lg btn-primary w-100' %>
+        <div class="col-md-4 mt-3 mt-md-0 mx-auto">
+            <%= link_to 'グループ参加', join_path, class: 'btn btn-lg btn-primary w-100 text-center' %>
+            <small class="text-muted"><i class="far fa-question-circle"></i> グループのコードとパスワードを用いて、既存グループに参加します。</small>
         </div>
     </div>
     
     <div>
-        <h3 class="border-bottom mt-5">作成したグループ</h3>
+        <h3 class="border-bottom">作成したグループ</h3>
         <% relationships = current_member.relationships %>
         <% relationships.each do |relationship| %>
           <% if relationship.is_admin == true %>

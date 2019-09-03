@@ -14,12 +14,12 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :start_time, 'Start_time' %>
+        <%= f.label :start_time, 'Start_time' %><br>
         <%= f.datetime_select :start_time, class: 'form-control' %>
       </div>
 
       <div class="form-group">
-        <%= f.label :end_time, 'End_time' %>
+        <%= f.label :end_time, 'End_time' %><br>
         <%= f.datetime_select :end_time, class: 'form-control' %>
       </div>
 
@@ -30,14 +30,12 @@
       
       <div class="form-group">
         <%= f.label :detail, 'Detail' %>
-        <%= f.text_field :detail, class: 'form-control' %>
+        <%= f.text_area :detail, class: 'form-control' %>
       </div>
 
-      <%= f.submit '完了', class: 'btn btn-primary btn-block' %>
+      <%= f.submit '完了', class: 'btn btn-primary btn-block mb-2' %>
     <% end %>
     
     <%= link_to '予定詳細へ戻る', group_schedule_path(@group, @schedule) %>
-    <%= link_to '一覧へ戻る', group_schedules_path(@group) %>
-    
   </div>
 </div>

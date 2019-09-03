@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   post 'join', to: 'groups#create_join'
   resources :groups, only: [:show, :new, :create, :edit, :update, :destroy] do
     resources :schedules
-    resources :members, only: :index
+    resources :members, only: [:index, :destroy]
   end
 end

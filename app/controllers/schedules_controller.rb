@@ -16,10 +16,10 @@ class SchedulesController < ApplicationController
     @group = Group.find(params[:group_id])
     @schedule = @group.schedules.build(schedule_params)
     if @schedule.save
-      flash[:success] = '予定を追加しました。'
+      flash[:success] = '予定を追加しました'
       redirect_to group_schedules_path(@group)
     else
-      flash[:danger] = '予定を追加できませんでした。'
+      flash[:danger] = '予定を追加できませんでした'
       render :new
     end
   end
@@ -38,10 +38,10 @@ class SchedulesController < ApplicationController
     @group = Group.find(params[:group_id])
     @schedule = Schedule.find(params[:id])
     if @schedule.update(schedule_params)
-      flash[:success] = '予定を編集しました。'
+      flash[:success] = '予定を編集しました'
       redirect_to group_schedules_path(@group)
     else
-      flash[:danger] = '予定を編集できませんでした。'
+      flash[:danger] = '予定を編集できませんでした'
       render :edit
     end
   end

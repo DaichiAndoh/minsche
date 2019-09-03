@@ -12,10 +12,10 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     if @group.save
       current_member.be_first_creator(@group)
-      flash[:success] = 'グループを作成しました。'
+      flash[:success] = 'グループを作成しました'
       redirect_to group_schedules_path(@group)
     else
-      flash[:danger] = 'グループ作成に失敗しました。'
+      flash[:danger] = 'グループ作成に失敗しました'
       render :new
     end
   end
@@ -27,10 +27,10 @@ class GroupsController < ApplicationController
   def update
     @group = Group.find(params[:id])
     if @group.update(group_params)
-      flash[:success] = 'グループを編集しました。'
+      flash[:success] = 'グループを編集しました'
       redirect_to group_schedules_path(@group)
     else
-      flash[:danger] = 'グループを編集できませんでした。'
+      flash[:danger] = 'グループを編集できませんでした'
       render :edit
     end
   end
@@ -51,10 +51,10 @@ class GroupsController < ApplicationController
     password = params[:password]
     @group = Group.find_by(code: code)
     if current_member.join_group(code, password)
-      flash[:success] = 'グループに参加しました。'
+      flash[:success] = 'グループに参加しました'
       redirect_to group_schedules_path(@group)
     else
-      flash.now[:danger] = 'グループに参加できませんでした。'
+      flash.now[:danger] = 'グループに参加できませんでした'
       render 'join'
     end
   end
@@ -62,6 +62,7 @@ class GroupsController < ApplicationController
   private
   
   def group_params
-    params.require(:group).permit(:name, :introduction, :image, :code, :password, :password_confirmation)
+    params.require(:group).permit(:name, :introduction, :code, :password, :password_confirmation)
+    # :imageは抜いている
   end
 end
