@@ -6,11 +6,11 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'members#new'
-  resources :members, only: [:new, :create]
+  resources :members, only: :create
   
   get 'join', to: 'groups#join'
   post 'join', to: 'groups#create_join'
-  resources :groups, only: [:show, :new, :create, :edit, :update, :destroy] do
+  resources :groups, only: [:new, :create, :edit, :update, :destroy] do
     resources :schedules
     resources :members, only: [:index, :destroy]
   end

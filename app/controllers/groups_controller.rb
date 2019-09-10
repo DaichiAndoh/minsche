@@ -1,9 +1,6 @@
 class GroupsController < ApplicationController
-  def show
-    @group = Group.find(params[:id])
-    @creator = Member.find_by(id: @group.first_creator_id)
-  end
-    
+  before_action :require_user_logged_in, only: [:show, :new, :edit, :join]
+
   def new
     @group = Group.new
   end

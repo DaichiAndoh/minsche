@@ -1,4 +1,6 @@
 class MembersController < ApplicationController
+  before_action :require_user_logged_in, only: :index
+  
   def index
     @group = Group.find(params[:group_id])
     @relationship = Relationship.find_by(member_id: current_member.id, group_id: @group.id)
@@ -21,9 +23,6 @@ class MembersController < ApplicationController
       flash.now[:danger] = '登録に失敗しました'
       render :new
     end
-  end
-  
-  def show
   end
   
   def destroy

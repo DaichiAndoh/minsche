@@ -1,40 +1,65 @@
 <% if logged_in? %>
-    <div class="row my-5">
-        <div class="col-md-4 mx-auto">
-            <%= link_to 'グループ作成', new_group_path, class: 'btn btn-lg btn-primary w-100 text-center' %>
-            <small class="text-muted"><i class="far fa-question-circle"></i> グループを作成して、グループのスケジュールを管理・共有できます。</small>
+    <div class="content ja-txt">
+        <div class="row my-5">
+            <div class="col-md-4 mx-auto">
+                <%= link_to 'グループ作成', new_group_path, class: 'btn btn-lg btn-primary w-100 text-center' %>
+                <small class="text-muted"><i class="far fa-question-circle"></i> グループを作成して、グループのスケジュールを管理・共有できます。</small>
+            </div>
+            <div class="col-md-4 mt-3 mt-md-0 mx-auto">
+                <%= link_to 'グループ参加', join_path, class: 'btn btn-lg btn-primary w-100 text-center' %>
+                <small class="text-muted"><i class="far fa-question-circle"></i> グループのコードとパスワードを用いて、既存グループに参加します。</small>
+            </div>
         </div>
-        <div class="col-md-4 mt-3 mt-md-0 mx-auto">
-            <%= link_to 'グループ参加', join_path, class: 'btn btn-lg btn-primary w-100 text-center' %>
-            <small class="text-muted"><i class="far fa-question-circle"></i> グループのコードとパスワードを用いて、既存グループに参加します。</small>
+        
+        <div>
+            <h3 class="border-bottom pb-1">作成したグループ</h3>
+            <% relationships = current_member.relationships %>
+            <% relationships.each do |relationship| %>
+              <% if relationship.is_admin == true %>
+                <% group = Group.find_by(id: relationship.group_id) %>
+                <p><%= link_to group.name, group_schedules_path(group) %></p>
+              <% end %>
+            <% end %>
         </div>
-    </div>
-    
-    <div>
-        <h3 class="border-bottom">作成したグループ</h3>
-        <% relationships = current_member.relationships %>
-        <% relationships.each do |relationship| %>
-          <% if relationship.is_admin == true %>
-            <% group = Group.find_by(id: relationship.group_id) %>
-            <p><%= link_to group.name, group_schedules_path(group) %></p>
-          <% end %>
-        <% end %>
-    </div>
-    <div>
-        <h3 class="border-bottom mt-5">参加しているグループ</h3>
-        <% relationships = current_member.relationships %>
-        <% relationships.each do |relationship| %>
-          <% if !relationship.is_admin == true %>
-            <% group = Group.find_by(id: relationship.group_id) %>
-            <p><%= link_to group.name, group_schedules_path(group) %></p>
-          <% end %>
-        <% end %>
+        <div>
+            <h3 class="border-bottom mt-5 pb-1">参加しているグループ</h3>
+            <% relationships = current_member.relationships %>
+            <% relationships.each do |relationship| %>
+              <% if !relationship.is_admin == true %>
+                <% group = Group.find_by(id: relationship.group_id) %>
+                <p><%= link_to group.name, group_schedules_path(group) %></p>
+              <% end %>
+            <% end %>
+        </div>
     </div>
 <% else %>
-    <div class="center jumbotron">
-      <div class="text-center">
-        <h1>Let's  share  the  schedule!</h1>
-        <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary mt-3' %>
-      </div>
+    <div class="content ja-txt">
+        <div class="center jumbotron bg-light">
+          <div class="text-center">
+            <h1 class="en-txt">Let's share the schedule !</h1>
+            <h1 style="font-size: 18px;">"みんスケ"はみんなのスケジュールを管理・共有できるサービスです。</h1>
+            <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary mt-3 en-txt' %>
+          </div>
+        </div>
+        
+        <div class="mt-5 mb-3 line"></div>
+        <h2 class="text-center" style="font-size: 28px;">簡単３ステップ！</h2>
+        <div class="row">
+          <section class="col-md-3 mx-md-auto m-3 p-3 text-center examination-box">
+            <h1 class="en-txt" style="font-size: 28px;">Step1</h1>
+            <p>グループを作成</p>
+            <i class="fas fa-user-alt display-3"></i>
+          </section>
+          <section class="col-md-3 mx-md-auto m-3 p-3 text-center examination-box">
+            <h1 class="en-txt" style="font-size: 28px;">Step2</h1>
+            <p>メンバーが参加</p>
+            <i class="fas fa-user-plus display-3"></i>
+          </section>
+          <section class="col-md-3 mx-md-auto m-3 p-3 text-center examination-box">
+            <h1 class="en-txt" style="font-size: 28px;">Step3</h1>
+            <p>予定を管理・共有</p>
+            <i class="far fa-calendar-alt display-3"></i>
+          </section>
+        </div>
     </div>
 <% end %>

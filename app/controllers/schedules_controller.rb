@@ -1,4 +1,6 @@
 class SchedulesController < ApplicationController
+  before_action :require_user_logged_in, only: [:index, :show, :new, :edit]
+  
   def index
     @group = Group.find(params[:group_id])
     @relationship = Relationship.find_by(member_id: current_member.id, group_id: @group.id)

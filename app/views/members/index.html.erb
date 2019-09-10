@@ -1,56 +1,74 @@
 <% if @relationship.is_admin == true %>
-    <h1><%= @group.name %></h1>
-    <div class="row">
-        <div class="col-sm-6">
+    <div class="content ja-txt">
+        <div>
+            <h1><%= @group.name %></h1>
             <p class="text-muted"><i class="far fa-user"></i> グループ作成者：<%= @creator.name %></p>
             <p><%= @group.introduction %></p>
             <%= link_to 'グループ編集', edit_group_path(@group) %>
         </div>
-        <div class="col-sm-6">
-            <%= image_tag @group.image.to_s %>
-        </div>
-    </div>
-    
-    <ul class="nav nav-tabs nav-justified my-4">
-      <li class="nav-item"><a href="<%= group_schedules_path(@group) %>" class="nav-link">予定表</a></li>
-      <li class="nav-item"><a href="<%= group_members_path(@group) %>" class="nav-link active">メンバー一覧</a></li>
-    </ul>
-    
-    <table class="table table-striped">
-        <% @members.each do |member| %>
-            <% if (member.relationships.find_by(group_id: @group.id, is_admin: true)) %>
-                <tr><td><%= member.name %></td><td class="text-muted">グループ管理者</td></tr>
-            <% else %>
-                <tr><td><%= member.name %></td><td></td></tr>
+        
+        <!--画像アップロード機能実装用-->
+        <!--<h1><%= @group.name %></h1>-->
+        <!--<div class="row">-->
+        <!--    <div class="col-sm-6">-->
+        <!--        <p class="text-muted"><i class="far fa-user"></i> グループ作成者：<%= @creator.name %></p>-->
+        <!--        <p><%= @group.introduction %></p>-->
+        <!--        <%= link_to 'グループ編集', edit_group_path(@group) %>-->
+        <!--    </div>-->
+        <!--    <div class="col-sm-6">-->
+        <!--        <%= image_tag @group.image.to_s %>-->
+        <!--    </div>-->
+        <!--</div>-->
+            
+        <ul class="nav nav-tabs nav-justified my-4">
+          <li class="nav-item"><a href="<%= group_schedules_path(@group) %>" class="nav-link">予定表</a></li>
+          <li class="nav-item"><a href="<%= group_members_path(@group) %>" class="nav-link active">メンバー一覧</a></li>
+        </ul>
+        
+        <table class="table table-striped">
+            <% @members.each do |member| %>
+                <% if (member.relationships.find_by(group_id: @group.id, is_admin: true)) %>
+                    <tr><td><%= member.name %></td><td class="text-muted">グループ管理者</td></tr>
+                <% else %>
+                    <tr><td><%= member.name %></td><td></td></tr>
+                <% end %>
             <% end %>
-        <% end %>
-    </table>
-    
+        </table>
+    </div>   
 <% else %>
-    <h1><%= @group.name %></h1>
-    <div class="row">
-        <div class="col-sm-6">
+    <div class="content ja-txt">
+        <div>
+            <h1><%= @group.name %></h1>
             <p class="text-muted"><i class="far fa-user"></i> グループ作成者：<%= @creator.name %></p>
             <p><%= @group.introduction %></p>
         </div>
-        <div class="col-sm-6">
-            <%= image_tag @group.image.to_s %>
-        </div>
-    </div>
-    
-    <ul class="nav nav-tabs nav-justified my-4">
-      <li class="nav-item"><a href="<%= group_schedules_path(@group) %>" class="nav-link">予定表</a></li>
-      <li class="nav-item"><a href="<%= group_members_path(@group) %>" class="nav-link active">メンバー一覧</a></li>
-    </ul>
-    
-    <table class="table table-striped">
-        <% @members.each do |member| %>
-            <% if (member.relationships.find_by(group_id: @group.id, is_admin: true)) %>
-                <tr><td><%= member.name %></td><td class="text-muted">グループ管理者</td></tr>
-            <% else %>
-                <tr><td><%= member.name %></td><td></td></tr>
+        
+        <!--画像アップロード機能実装用-->
+        <!--<h1><%= @group.name %></h1>-->
+        <!--<div class="row">-->
+        <!--    <div class="col-sm-6">-->
+        <!--        <p class="text-muted"><i class="far fa-user"></i> グループ作成者：<%= @creator.name %></p>-->
+        <!--        <p><%= @group.introduction %></p>-->
+        <!--    </div>-->
+        <!--    <div class="col-sm-6">-->
+        <!--        <%= image_tag @group.image.to_s %>-->
+        <!--    </div>-->
+        <!--</div>-->
+        
+        <ul class="nav nav-tabs nav-justified my-4">
+          <li class="nav-item"><a href="<%= group_schedules_path(@group) %>" class="nav-link">予定表</a></li>
+          <li class="nav-item"><a href="<%= group_members_path(@group) %>" class="nav-link active">メンバー一覧</a></li>
+        </ul>
+        
+        <table class="table table-striped">
+            <% @members.each do |member| %>
+                <% if (member.relationships.find_by(group_id: @group.id, is_admin: true)) %>
+                    <tr><td><%= member.name %></td><td class="text-muted">グループ管理者</td></tr>
+                <% else %>
+                    <tr><td><%= member.name %></td><td></td></tr>
+                <% end %>
             <% end %>
-        <% end %>
-    </table>
-    <%= link_to 'グループ退出', "members/#{@member.id}", method: :delete, data: { confirm: '本当にグループを退出しますか？' }, class: 'btn btn-md btn-danger text-white' %>
+        </table>
+        <%= link_to 'グループ退出', "members/#{@member.id}", method: :delete, data: { confirm: '本当にグループを退出しますか？' }, class: 'btn btn-md btn-danger text-white mb-4' %>
+    </div>
 <% end %>

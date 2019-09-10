@@ -1,27 +1,34 @@
-// _navbar.html.erb
+body {
+    color: #555;
+    padding-top: 60px;
+}
 
-#logo {
-    font-family: 'Josefin Sans', sans-serif;
+.ja-txt {
     font-family: 'Kosugi Maru', sans-serif;
 }
 
+.en-txt {
+    font-family: 'Nunito', sans-serif;
+}
+
+
+// _navbar.html.erb
+
 .navbar {
     background-color: #eaf6fd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
 }
 
 // toppages/index.html.erb
 
 .line {
     width: 10%;
-    margin: auto;
+    margin: 0 auto;
     border-top: 3px solid #666;
-}
-
-.ja-txt {
-    font-family: 'Josefin Sans', sans-serif;
-    font-family: 'Kosugi Maru', sans-serif;
-    font-size: 18px;
-    color: #555;
 }
 
 .examination-box {
