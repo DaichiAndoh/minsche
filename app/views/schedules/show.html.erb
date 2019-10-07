@@ -8,22 +8,22 @@
               <h2 class="text-center">予定詳細</h2>
             </div>
             <div class="card-body">
-              <h4 class="en-txt">Title : <span class="font-weight-normal ja-txt"><%= @schedule.title %></span></h4>
-              <h4 class="en-txt">Date : <span class="font-weight-normal ja-txt"><%= @schedule.start_time.strftime("%Y年%m月%d日") %></span></h4>
-              <h4 class="en-txt">Time：<span class="font-weight-normal ja-txt"><%= @schedule.start_time.strftime("%H:%M") %> 〜 <%= @schedule.end_time.strftime("%H:%M") %></span></h4>
-              <h4 class="en-txt">Place：<span class="font-weight-normal ja-txt"><%= @schedule.place %></span></h4>
-              <h4 class="en-txt">Memo：<span class="font-weight-normal ja-txt"><%= @schedule.detail %></span></h4>
+              <h4>タイトル : <span><%= @schedule.title %></span></h4>
+              <h4>日にち : <span><%= @schedule.start_time.strftime("%Y年%m月%d日") %></span></h4>
+              <h4>時間：<span><%= @schedule.start_time.strftime("%H:%M") %> 〜 <%= @schedule.end_time.strftime("%H:%M") %></span></h4>
+              <h4>場所：<span><%= @schedule.place %></span></h4>
+              <h4>詳細：<span><%= @schedule.detail %></span></h4>
             </div>
           <% else %>
             <div class="card-header">
               <h2 class="text-center">予定詳細</h2>
             </div>
             <div class="card-body">
-              <h4 class="en-txt">Title : <span class="font-weight-normal ja-txt"><%= @schedule.title %></span></h4>
-              <h4 class="en-txt">Date : <span class="font-weight-normal ja-txt"><%= @schedule.start_time.strftime("%Y年%m月%d日") %> 〜 <%= @schedule.end_time.strftime("%Y年%m月%d日") %></span></h4>
-              <h4 class="en-txt">Time：<span class="font-weight-normal ja-txt"><%= @schedule.start_time.strftime("%m月%d日 %H:%M") %> 〜 <%= @schedule.end_time.strftime("%m月%d日 %H:%M") %></span></h4>
-              <h4 class="en-txt">Place：<span class="font-weight-normal ja-txt"><%= @schedule.place %></span></h4>
-              <h4 class="en-txt">Memo：<span class="font-weight-normal ja-txt"><%= @schedule.detail %></span></h4>
+              <h4>タイトル : <span><%= @schedule.title %></span></h4>
+              <h4>日にち : <span><%= @schedule.start_time.strftime("%Y年%m月%d日") %> 〜 <%= @schedule.end_time.strftime("%Y年%m月%d日") %></span></h4>
+              <h4>時間：<span><%= @schedule.start_time.strftime("%m月%d日 %H:%M") %> 〜 <%= @schedule.end_time.strftime("%m月%d日 %H:%M") %></span></h4>
+              <h4>場所：<span><%= @schedule.place %></span></h4>
+              <h4>詳細：<span><%= @schedule.detail %></span></h4>
             </div>
           <% end %>
         </div>
@@ -32,7 +32,8 @@
             <%= link_to '予定を編集', edit_group_schedule_path(@group, @schedule), class: 'btn btn-lg btn-primary my-3 mx-4' %>
             <%= link_to '予定を削除', @destroyed_schedule, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-lg btn-primary my-3 mx-4' %>
         </div>
-        <%= link_to 'グループトップへ戻る', group_schedules_path(@group) %>
+        
+        <div class="mb-4"><%= link_to 'グループトップへ戻る', group_schedules_path(@group) %></div>
       </div>
     </div>
   </div>
@@ -46,22 +47,22 @@
               <h2 class="text-center">予定詳細</h2>
             </div>
             <div class="card-body">
-              <h4 class="en-txt">Title : <span class="font-weight-normal ja-txt"><%= @schedule.title %></span></h4>
-              <h4 class="en-txt">Date : <span class="font-weight-normal ja-txt"><%= @schedule.start_time.strftime("%Y年%m月%d日") %></span></h4>
-              <h4 class="en-txt">Time：<span class="font-weight-normal ja-txt"><%= @schedule.start_time.strftime("%H:%M") %> 〜 <%= @schedule.end_time.strftime("%H:%M") %></span></h4>
-              <h4 class="en-txt">Place：<span class="font-weight-normal ja-txt"><%= @schedule.place %></span></h4>
-              <h4 class="en-txt">Memo：<span class="font-weight-normal ja-txt"><%= @schedule.detail %></span></h4>
+              <h4>タイトル : <span><%= @schedule.title %></span></h4>
+              <h4>日にち : <span><%= @schedule.start_time.strftime("%Y年%m月%d日") %></span></h4>
+              <h4>時間：<span><%= @schedule.start_time.strftime("%H:%M") %> 〜 <%= @schedule.end_time.strftime("%H:%M") %></span></h4>
+              <h4>場所：<span><%= @schedule.place %></span></h4>
+              <h4>詳細：<span><%= @schedule.detail %></span></h4>
             </div>
           <% else %>
             <div class="card-header">
               <h2 class="text-center">予定詳細</h2>
             </div>
             <div class="card-body">
-              <h4 class="en-txt">Title : <span class="font-weight-normal ja-txt"><%= @schedule.title %></span></h4>
-              <h4 class="en-txt">Date : <span class="font-weight-normal ja-txt"><%= @schedule.start_time.strftime("%Y年%m月%d日") %> 〜 <%= @schedule.end_time.strftime("%Y年%m月%d日") %></span></h4>
-              <h4 class="en-txt">Time：<span class="font-weight-normal ja-txt"><%= @schedule.start_time.strftime("%m月%d日 %H:%M") %> 〜 <%= @schedule.end_time.strftime("%m月%d日 %H:%M") %></span></h4>
-              <h4 class="en-txt">Place：<span class="font-weight-normal ja-txt"><%= @schedule.place %></span></h4>
-              <h4 class="en-txt">Memo：<span class="font-weight-normal ja-txt"><%= @schedule.detail %></span></h4>
+              <h4>タイトル : <span><%= @schedule.title %></span></h4>
+              <h4>日にち : <span><%= @schedule.start_time.strftime("%Y年%m月%d日") %> 〜 <%= @schedule.end_time.strftime("%Y年%m月%d日") %></span></h4>
+              <h4>時間：<span><%= @schedule.start_time.strftime("%m月%d日 %H:%M") %> 〜 <%= @schedule.end_time.strftime("%m月%d日 %H:%M") %></span></h4>
+              <h4>場所：<span><%= @schedule.place %></span></h4>
+              <h4>詳細：<span><%= @schedule.detail %></span></h4>
             </div>
           <% end %>
         </div>
