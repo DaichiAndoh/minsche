@@ -43,13 +43,14 @@ jobs:
       - restore_cache: # vendor/bundleを復元
           key: v10-dependencies-{{ checksum "Gemfile.lock" }}
 
-      - run:
-          name: setup bundler
+#       - run:
+#           name: setup bundler
 #           command: |
 #             sudo gem uninstall bundler
 #             sudo rm /usr/local/bin/bundle
 #             sudo rm /usr/local/bin/bundler
-            sudo gem install bundler -v 2.0.1
+#             sudo gem install bundler -v 2.0.1
+      - install_bundler:
       - run:
           name: Bundle Install Dependencies
           command: |
