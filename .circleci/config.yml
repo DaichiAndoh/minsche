@@ -46,10 +46,10 @@ jobs:
        - ./vendor/bundle
        key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 #    Database setup
-#    - run:
-#        name: Prepare db
-#        command: |
-#          bin/rails db:schema:load --trace
+   - run:
+       name: Prepare db
+       command: |
+         bin/rails db:schema:load --trace
 #    run tests!
 #    - run:
 #        name: Run rspec
