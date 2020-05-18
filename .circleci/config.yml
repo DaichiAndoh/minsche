@@ -14,7 +14,7 @@ executors:
       - image: circleci/mysql:5.6-ram
         environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
-    working_directory: ~/share-schedule
+    working_directory: ~/minsche
 
 commands:
   install_bundler:
@@ -32,7 +32,7 @@ jobs:
       - save_cache:
           key: v10-circleci-example-for-rails-{{ .Environment.CIRCLE_SHA1 }}
           paths:
-            - ~/circle-example-for-rails
+            - ~/minsche
 
   bundle_dependencies:
     executor:
