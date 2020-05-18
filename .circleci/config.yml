@@ -1,81 +1,112 @@
-# version: 2.1
-# orbs:
-#   ruby: circleci/ruby@0.1.2 
-
-# jobs:
-#   build:
-#     docker:
-#       - image: circleci/ruby:2.5.3-stretch-node
-#     executor: ruby/default
-#     steps:
-#       - checkout
-#       - run:
-#           name: Which bundler?
-#           command: bundle -v
-#       - ruby/bundle-install
-      
-      
 version: 2.1
+
+executors:
+  default_container:
+    docker:
+      - image: circleci/ruby:2.5.3-node
+        environment:
+          RAILS_ENV: test
+          BUNDLE_JOBS: 4
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          BUNDLER_VERSION: 2.0.1
+
+      - image: circleci/mysql:5.6-ram
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+    working_directory: ~/share-schedule
+
+commands:
+  install_bundler:
+    description: Bundlerのインストール
+    steps:
+      - run: gem install bundler -v 2.0.1
+
+
 jobs:
- build:
-   docker:
-   - image: circleci/ruby:2.5.3-node
-     environment:
-       RAILS_ENV: test
-   - image: circleci/mysql:5.6-ram
-     environment:
-       MYSQL_DATABASE: share_schedule_test
-       MYSQL_ALLOW_EMPTY_PASSWORD: true
-       MYSQL_ROOT_HOST: '%'
-       MYSQL_USER: root
-       MYSQL_PORT: 3306
-   working_directory: ~/share_schedule
-   steps:
-   - checkout
-   - restore_cache:
-       keys:
-       - v1-dependencies-{{ checksum "Gemfile.lock" }}
-       - v1-dependencies-
-   - run:
-       name: install dependencies
-       command: |
-         gem install bundler -v 2.0.1
-         bundle install --jobs=4 --retry=3 --path vendor/bundle
-   - save_cache:
-       paths:
-       - ./vendor/bundle
-       key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-       
-   - run:
-          name: Wait for DB
-          command: dockerize -wait tcp://localhost:5432 -timeout 1m
-#    Database setup
-   - run:
-       name: Prepare db
-       command: |
-         bin/rails db:schema:load --trace
-#    run tests!
-#    - run:
-#        name: Run rspec
-#        command: |
-#          mkdir /tmp/test-results
-#          TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-#          bundle exec rspec --format progress --color --format documentation
-         
-#     - run:
-#           name: Database setup
-#           command: |
-#             bundle exec rails db:create
-#             bundle exec rails db:migrate
+  fetch_source_code:
+    executor:
+      name: default_container
+    steps:
+      - checkout
+      - save_cache:
+          key: v10-circleci-example-for-rails-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/circle-example-for-rails
 
-#       # テストの実行
-#       - run:
-#           name: Rails Test
-#           command: bundle exec rake test
+  bundle_dependencies:
+    executor:
+      name: default_container
+    steps:
+      - restore_cache: # ソースコードの復元
+          key: v10-circleci-example-for-rails-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache: # vendor/bundleを復元
+          key: v10-dependencies-{{ checksum "Gemfile.lock" }}
 
-   # collect reports
-#    - store_test_results:
-#        path: /tmp/test-results
-#    - store_artifacts:
-#        path: /tmp/test-results
-#        destination: test-results
+      - run:
+          name: setup bundler
+          command: |
+            sudo gem uninstall bundler
+            sudo rm /usr/local/bin/bundle
+            sudo rm /usr/local/bin/bundler
+            sudo gem install bundler -v 2.0.1
+      - run:
+          name: Bundle Install Dependencies
+          command: |
+            bundle install
+      - save_cache:
+          key: v10-dependencies-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+  rspec:
+    executor:
+      name: default_container
+    steps:
+      - restore_cache: # ソースコードの復元
+          key: v10-circleci-example-for-rails-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache: # vendor/bundleを復元
+          key: v10-dependencies-{{ checksum "Gemfile.lock" }}
+
+      - run:
+          name: Watting stand up database
+          command: |
+            dockerize -wait \
+            tcp://127.0.0.1:3306 -timeout 120s
+      # Database setup
+      - run: rm ./config/database.yml
+      - run: mv ./config/database.yml.ci ./config/database.yml
+      - install_bundler
+      - run:
+          name: Testing DB migration and seed
+          command: |
+            bundle exec rails db:create db:migrate db:seed db:drop
+      # run tests!
+      - run:
+          name: Run rspec
+          command: |
+            mkdir /tmp/test-results
+            mkdir -p ~/rspec
+            bundle exec rails db:create db:migrate
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+            bundle exec rspec --require rails_helper \
+                              --color \
+                              --format progress \
+                              --format RspecJunitFormatter \
+                              --out ~/rspec/rspec.xml
+      # collect reports
+      - store_test_results:
+          path: ~/rspec
+      - store_artifacts:
+          path: ~/tmp/test-results
+          destination: test-results
+
+workflows:
+  build:
+    jobs:
+      - fetch_source_code
+      - bundle_dependencies:
+          requires:
+            - fetch_source_code
+      - rspec:
+          requires: # bundle_dependenciesの後にrspecを実行する
+            - bundle_dependencies
