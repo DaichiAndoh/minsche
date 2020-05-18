@@ -5,4 +5,4 @@ test:
   username: <%= ENV.fetch("MYSQL_USERNAME", "root") %>
   host: <%= ENV.fetch("MYSQL_HOST", "127.0.0.1") %>
   port: <%= ENV.fetch("MYSQL_PORT", "3306") %>
-  database: circleci-example-for-rails
+  database: share_schedule_test
