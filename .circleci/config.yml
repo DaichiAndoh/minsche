@@ -1,15 +1,57 @@
-version: 2.1
-orbs:
-  ruby: circleci/ruby@0.1.2 
+# version: 2.1
+# orbs:
+#   ruby: circleci/ruby@0.1.2 
 
+# jobs:
+#   build:
+#     docker:
+#       - image: circleci/ruby:2.5.3-stretch-node
+#     executor: ruby/default
+#     steps:
+#       - checkout
+#       - run:
+#           name: Which bundler?
+#           command: bundle -v
+#       - ruby/bundle-install
+      
+      
+version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.5.3-stretch-node
-    executor: ruby/default
+      - image: circleci/ruby:2.5.3-node-browsers
+        environment:
+          RAILS_ENV: test
     steps:
+      # コードのチェックアウト
       - checkout
+
+      # bundle installのキャシュがあればそれを取ってくる
+      - restore_cache:
+          keys:
+            - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - gem-cache-{{ arch }}-{{ .Branch }}
+            - gem-cache
+
+      # bundle installの実行
       - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
+          name: Bundle Install
+          command: bundle check --path=vendor/bundle
+
+      # bundle installのデータをキャッシュ
+      - save_cache:
+          key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - ./vendor/bundle
+
+      # 初期設定
+      - run:
+          name: Database setup
+          command: |
+            bundle exec rails db:create
+            bundle exec rails db:migrate
+
+      # テストの実行
+      - run:
+          name: Rails Test
+          command: bundle exec rake test
