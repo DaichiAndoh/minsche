@@ -17,41 +17,49 @@
       
 version: 2.1
 jobs:
-  build:
-    docker:
-      - image: circleci/ruby:2.5.3-node-browsers
-        environment:
-          RAILS_ENV: test
-    steps:
-      # コードのチェックアウト
-      - checkout
+ build:
+   docker:
+   - image: circleci/ruby:2.5.3-node
+     environment:
+       RAILS_ENV: test
+   - image: circleci/mysql:5.6-ram
+     environment:
+       MYSQL_DATABASE: share_schedule_test
+       MYSQL_ALLOW_EMPTY_PASSWORD: true
+       MYSQL_ROOT_HOST: '%'
+       MYSQL_USER: root
+   working_directory: ~/share_schedule
+   steps:
+   - checkout
+   - restore_cache:
+       keys:
+       - v1-dependencies-{{ checksum "Gemfile.lock" }}
+       - v1-dependencies-
+   - run:
+       name: install dependencies
+       command: |
+         gem install bundler -v 2.0.1
+         bundle install --jobs=4 --retry=3 --path vendor/bundle
+   - save_cache:
+       paths:
+       - ./vendor/bundle
+       key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+   # Database setup
+   - run:
+       name: Prepare db
+       command: |
+         bundle exec rails db:schema:load --trace
+   # run tests!
+   - run:
+       name: Run rspec
+       command: |
+         mkdir /tmp/test-results
+         TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+         bundle exec rspec --format progress --color --format documentation
 
-      # bundle installのキャシュがあればそれを取ってくる
-      - restore_cache:
-          keys:
-            - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            - gem-cache-{{ arch }}-{{ .Branch }}
-            - gem-cache
-
-      # bundle installの実行
-      - run:
-          name: Bundle Install
-          command: bundle check --path=vendor/bundle
-
-      # bundle installのデータをキャッシュ
-      - save_cache:
-          key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - ./vendor/bundle
-
-      # 初期設定
-      - run:
-          name: Database setup
-          command: |
-            bundle exec rails db:create
-            bundle exec rails db:migrate
-
-      # テストの実行
-      - run:
-          name: Rails Test
-          command: bundle exec rake test
+   # collect reports
+   - store_test_results:
+       path: /tmp/test-results
+   - store_artifacts:
+       path: /tmp/test-results
+       destination: test-results
