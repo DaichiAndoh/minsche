@@ -14,9 +14,8 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mysql:5.6
-      　environment:
-      　  MYSQL_ROOT_PASSWORD: password
-
+        environment:
+          MYSQL_ROOT_PASSWORD: password
     working_directory: ~/minsche
 
     steps:
