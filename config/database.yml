@@ -29,7 +29,7 @@ test:
   database: share-schedule_test
   host: localhost
   host: <%= ENV.fetch("DB_HOST") { 'localhost' } %>
-  username: <%= ENV.fetch("DBss_USERNAME") %>
+  username: <%= ENV.fetch("DB_USERNAME") %>
   password: <%= ENV.fetch("DB_PASSWORD") %>
 #   socket: /tmp/mysql.sock
 # As with config/secrets.yml, you never want to store sensitive information,
