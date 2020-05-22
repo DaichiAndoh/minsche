@@ -31,7 +31,8 @@ test:
   database: share-schedule_test
   host: 127.0.0.1
   username: root
-  password: password
+  password: password     #ここに値を入れるなら、.circleci/config.ymlのDBイメージの環境変数として”MYSQL_ROOT_PASSWORD: password”を入れる。
+                         #空の場合は環境変数はいらない
   # socket: /tmp/mysql.sock
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
