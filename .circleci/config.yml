@@ -15,7 +15,9 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mysql:5.6
         environment:
+          MYSQL_ROOT_HOST: localhost
           MYSQL_ROOT_PASSWORD: password
+          
     working_directory: ~/minsche
 
     steps:
