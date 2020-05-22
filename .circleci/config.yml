@@ -15,8 +15,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/mysql:5.6
         environment:
-          MYSQL_ROOT_HOST: '%'
-          MYSQL_DATABASE: share-schedule_test
+          MYSQL_ROOT_HOST: 127.0.0.1
           MYSQL_USER: andoh
           MYSQL_PASSWORD: aaa
 
