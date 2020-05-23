@@ -17,9 +17,9 @@ jobs:
         environment:
           MYSQL_ROOT_HOST: localhost
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: share-schedule_test
-          MYSQL_USER: andoh
-          MYSQL_PASSWORD: aaa
+          # MYSQL_DATABASE: share-schedule_test
+          # MYSQL_USER: andoh
+          # MYSQL_PASSWORD: aaa
           
     working_directory: ~/minsche
 
@@ -48,7 +48,7 @@ jobs:
           command: dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
 
       # Database setup
-      # - run: bundle exec rails db:create
+      - run: bundle exec rails db:create
       - run: bundle exec rails db:schema:load
       
       - run:
