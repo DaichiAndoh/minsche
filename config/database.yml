@@ -29,8 +29,8 @@ test:
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: share-schedule_test
-  host: localhost
-  username: root
+  host: 127.0.0.1
+  # username: root
   password: password
   # socket: /tmp/mysql.sock
 # As with config/secrets.yml, you never want to store sensitive information,
