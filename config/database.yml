@@ -30,7 +30,7 @@ test:
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: share-schedule_test
   host: 127.0.0.1
-  username: andoh
+  username: root
   password: abc
   # socket: /tmp/mysql.sock
 # As with config/secrets.yml, you never want to store sensitive information,
