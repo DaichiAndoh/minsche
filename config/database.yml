@@ -14,11 +14,16 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: password
-  host: db
+  password:
+  host: localhost
 
 development:
-  <<: *default
+  adapter: mysql2
+  encoding: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: root
+  password: password
+  host: db
   database: share-schedule_development
 
 # Warning: The database defined as "test" will be erased and
@@ -29,9 +34,9 @@ test:
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: share-schedule_test
-  host: <%= ENV.fetch("DB_HOST") { 'localhost' } %> 
+  host: <%= ENV.fetch("DB_HOST") { 'localhost' } %>
   username: <%= ENV.fetch("DB_USERNAME") { 'root' } %> 
-  password: <%= ENV.fetch("DB_PASSWORD") { 'password' } %> 
+  password: <%= ENV.fetch("DB_PASSWORD") { '' } %>
   # socket: /tmp/mysql.sock
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

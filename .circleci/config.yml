@@ -11,7 +11,7 @@ jobs:
           BUNDLE_PATH: vendor/bundle
           DB_HOST: 127.0.0.1
           DB_USERNAME: 'root' 
-          DB_PASSWORD: 'password'
+          DB_PASSWORD: ''
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -19,10 +19,7 @@ jobs:
       - image: circleci/mysql:5.6
         environment:
           MYSQL_ROOT_HOST: "%"
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: share-schedule_test
-          MYSQL_USER: andoh
-          MYSQL_PASSWORD: aaa
+          MYSQL_ROOT_PASSWORD: ''
           
     working_directory: ~/minsche
 
