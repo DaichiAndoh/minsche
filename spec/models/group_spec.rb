@@ -27,20 +27,20 @@ RSpec.describe Group, type: :model do
   end
   
   # 重複したコードなら無効な状態であること
-    it "is invalid with a duplicate code" do
-      Group.create(
-        name: "sample",
-        introduction: "This is a group!",
-        code: 123,
-        password_digest: "sample"
-      )
-      group = Group.new(
-        name: "sample2",
-        introduction: "This is a group!",
-        code: 123,
-        password_digest: "sample2"
-      )
-      group.valid?
-      expect(group.errors[:code]).to include("has already been taken")
-    end
+  it "is invalid with a duplicate code" do
+    Group.create(
+      name: "sample",
+      introduction: "This is a group!",
+      code: 123,
+      password_digest: "sample"
+    )
+    group = Group.new(
+      name: "sample2",
+      introduction: "This is a group!",
+      code: 123,
+      password_digest: "sample2"
+    )
+    group.valid?
+    expect(group.errors[:code]).to include("has already been taken")
+  end
 end
