@@ -3,18 +3,9 @@ require 'rails_helper'
 RSpec.describe Relationship, type: :model do
   # グループを作成したメンバーが管理者になること
   it "promises that group creator become group admin" do
-    member = Member.create(
-      name: "sample",
-      email: "sample@sample.com",
-      password_digest: "sample"
-    )
+    member = FactoryBot.create(:member)
     
-    group = Group.create(
-      name: "sample",
-      introduction: "This is a group!",
-      code: 123,
-      password_digest: "sample"
-    )
+    group = FactoryBot.create(:group)
     
     member.be_first_creator(group)
     
@@ -23,18 +14,9 @@ RSpec.describe Relationship, type: :model do
   
   # メンバーはグループに参加できること
   it "promises that member can join groups" do
-    member = Member.create(
-      name: "sample",
-      email: "sample@sample.com",
-      password_digest: "sample"
-    )
+    member = FactoryBot.create(:member)
     
-    group = Group.create(
-      name: "sample",
-      introduction: "This is a group!",
-      code: 123,
-      password: "sample"
-    )
+    group = FactoryBot.create(:group)
     
     member.join_group(group.code, group.password)
     
@@ -45,18 +27,9 @@ RSpec.describe Relationship, type: :model do
   
   # メンバーはコードが一致しなければグループに参加できないこと
   it "doesn't allow member to join groups if code is wrong" do
-    member = Member.create(
-      name: "sample",
-      email: "sample@sample.com",
-      password_digest: "sample"
-    )
+    member = FactoryBot.create(:member)
     
-    group = Group.create(
-      name: "sample",
-      introduction: "This is a group!",
-      code: 123,
-      password: "sample"
-    )
+    group = FactoryBot.create(:group)
     
     member.join_group(111, group.password)
     
@@ -65,18 +38,9 @@ RSpec.describe Relationship, type: :model do
   
   # メンバーはパスワードが一致しなければグループに参加できないこと
   it "doesn't allow member to join groups if password is wrong" do
-    member = Member.create(
-      name: "sample",
-      email: "sample@sample.com",
-      password_digest: "sample"
-    )
+    member = FactoryBot.create(:member)
     
-    group = Group.create(
-      name: "sample",
-      introduction: "This is a group!",
-      code: 123,
-      password: "sample"
-    )
+    group = FactoryBot.create(:group)
     
     member.join_group(group.code, "aaa")
     
