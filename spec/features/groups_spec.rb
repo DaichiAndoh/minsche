@@ -5,11 +5,9 @@ RSpec.feature "Groups", type: :feature do
   scenario "member creates a new group" do
     member = FactoryBot.create(:member)
     
+    sign_in_as member
+    
     visit root_path
-    click_link "ログイン"
-    fill_in "メールアドレス", with: member.email
-    fill_in "パスワード", with: member.password
-    click_button "ログイン"
     
     expect {
       within ".row" do
