@@ -13,23 +13,11 @@ RSpec.describe Schedule, type: :model do
     end
     
     # タイトルがなければ無効な状態であること
-    it "is invalid without title" do
-      schedule = FactoryBot.build(:schedule, title: nil)
-      schedule.valid?
-      expect(schedule.errors[:title]).to include("can't be blank")
-    end
+    it { is_expected.to validate_presence_of :title }
     
     # 開始時間がなければ無効な状態であること
-    it "is invalid without start_time" do
-      schedule = FactoryBot.build(:schedule, start_time: nil)
-      schedule.valid?
-      expect(schedule.errors[:start_time]).to include("can't be blank")
-    end
+    it { is_expected.to validate_presence_of :start_time }
     
     # 終了時間がなければ無効な状態であること
-    it "is invalid without end_time" do
-      schedule = FactoryBot.build(:schedule, end_time: nil)
-      schedule.valid?
-      expect(schedule.errors[:end_time]).to include("can't be blank")
-    end
+    it { is_expected.to validate_presence_of :end_time }
 end

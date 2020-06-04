@@ -13,27 +13,13 @@ RSpec.describe Group, type: :model do
   end
   
   # 名がなければ無効な状態であること
-  it "is invalid without name" do
-    group = FactoryBot.build(:group, name: nil)
-    group.valid?
-    expect(group.errors[:name]).to include("can't be blank")
-  end
+  it { is_expected.to validate_presence_of :name }
     
   # 紹介文がなければ無効な状態であること
-  it "is invalid without an introduction" do
-    group = FactoryBot.build(:group, introduction: nil)
-    group.valid?
-    expect(group.errors[:introduction]).to include("can't be blank")
-  end
+  it { is_expected.to validate_presence_of :introduction }
   
   # 重複したコードなら無効な状態であること
-  it "is invalid with a duplicate code" do
-    FactoryBot.create(:group, code: 123)
-    group = FactoryBot.build(:group, code: 123)
-    group.valid?
-    expect(group.errors[:code]).to include("has already been taken")
-  end
-  
+  it { is_expected.to validate_uniqueness_of(:code) }
   
   #コールバック勉強用
   it "can have many notes" do
