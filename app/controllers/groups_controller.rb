@@ -59,7 +59,7 @@ class GroupsController < ApplicationController
   private
   
   def group_params
-    params.require(:group).permit(:name, :introduction, :code, :password, :password_confirmation)
+    params.require(:group).permit(:name, :introduction, :image, :code, :password, :password_confirmation)
     # :imageは抜いている
   end
 end
