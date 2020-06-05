@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :require_user_logged_in, only: [:show, :new, :edit, :join]
+  before_action :require_user_logged_in, only: [:show, :new, :create, :edit, :join]
 
   def new
     @group = Group.new
