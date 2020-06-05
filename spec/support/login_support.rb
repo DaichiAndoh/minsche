@@ -9,5 +9,5 @@ module LoginSupport
 end
 
 RSpec.configure do |config|
-config.include LoginSupport
+   config.include LoginSupport
 end
