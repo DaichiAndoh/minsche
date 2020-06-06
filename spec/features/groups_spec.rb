@@ -15,6 +15,7 @@ RSpec.feature "Groups", type: :feature do
       end
       fill_in "グループ名", with: "Sample_Group"
       fill_in "グループ紹介文", with: "This is a group!"
+      attach_file 'グループ画像', "#{Rails.root}/app/assets/images/default.png"
       fill_in "コード", with: 123
       fill_in "パスワード", with: "sample"
       fill_in "パスワード（確認）", with: "sample"
