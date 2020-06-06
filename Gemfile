@@ -71,7 +71,7 @@ gem 'carrierwave'
 
 gem 'rmagick'
 
-gem "simple_calendar", "~> 2.0"
+gem "simple_calendar", "~> 2.3.0"
 
 gem "jquery-rails"
 
